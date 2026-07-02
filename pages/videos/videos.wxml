@@ -69,6 +69,13 @@
     <text>加载中...</text>
   </view>
 
+  <!-- 加载更多 -->
+  <view class="load-more" wx:if="{{videos.length > 0 && !loading}}">
+    <view wx:if="{{loadingMore}}" class="load-more-text">加载中...</view>
+    <view wx:elif="{{!hasMore}}" class="load-more-text load-more-end">— 已经到底了 —</view>
+    <view wx:else class="load-more-text">上拉加载更多</view>
+  </view>
+
   <!-- 上传弹窗 -->
   <view class="modal-mask" wx:if="{{showUploadModal}}" catchtouchmove="onNoop">
     <view class="modal" catchtap="onNoop" catchtouchmove="onNoop">

@@ -267,6 +267,24 @@
   font-size: 24rpx;
 }
 
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 40rpx 0 60rpx;
+}
+
+.load-more-text {
+  font-size: 26rpx;
+  color: #999;
+  display: inline-block;
+  padding: 10rpx 30rpx;
+}
+
+.load-more-end {
+  color: #CCC;
+  font-size: 24rpx;
+}
+
 .preview-close {
   position: absolute;
   top: 60rpx;

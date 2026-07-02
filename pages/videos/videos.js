@@ -6,6 +6,10 @@ Page({
   data: {
     videos: [],
     loading: true,
+    loadingMore: false,
+    hasMore: true,
+    page: 1,
+    pageSize: 20,
     isAdmin: false,
     showUploadModal: false,
     uploadPassword: '',
@@ -24,22 +28,41 @@ Page({
   },
 
   onShow() {
-    this.loadVideos()
+    this.loadVideos(true)
     this.setData({ isAdmin: app.globalData.isAdmin })
   },
 
   onPullDownRefresh() {
-    this.loadVideos().then(() => {
+    this.loadVideos(true).then(() => {
       wx.stopPullDownRefresh()
     })
   },
 
-  async loadVideos() {
-    this.setData({ loading: true })
+  // 触底加载更多
+  onReachBottom() {
+    if (this.data.hasMore && !this.data.loadingMore && !this.data.loading) {
+      this.loadVideos(false)
+    }
+  },
+
+  async loadVideos(reset) {
+    if (reset) {
+      this.setData({ loading: true, videos: [], page: 1, hasMore: true })
+    } else {
+      if (!this.data.hasMore) return
+      this.setData({ loadingMore: true })
+    }
+
     try {
-      const res = await callCloud('getMediaList', { type: 'video' })
+      const page = reset ? 1 : this.data.page
+      const res = await callCloud('getMediaList', {
+        type: 'video',
+        page: page,
+        pageSize: this.data.pageSize,
+        loadMore: !reset
+      })
       if (res.success && Array.isArray(res.data)) {
-        const videos = res.data.map(function (v) {
+        const newVideos = res.data.map(function (v) {
           let format = 'MP4'
           if (v.url) {
             const match = v.url.match(/\.(\w+)(?:\?|$)/)
@@ -65,7 +88,7 @@ Page({
         })
 
         // 把 cloud:// 转成 https:// 临时链接（video 组件只认 https）
-        const cloudFileIDs = videos
+        const cloudFileIDs = newVideos
           .filter(function (v) { return v.url && v.url.startsWith('cloud://') })
           .map(function (v) { return v.url })
 
@@ -74,7 +97,7 @@ Page({
             const tempRes = await wx.cloud.getTempFileURL({ fileList: cloudFileIDs })
             if (tempRes && tempRes.fileList) {
               tempRes.fileList.forEach(function (item) {
-                videos.forEach(function (v) {
+                newVideos.forEach(function (v) {
                   if (v.url === item.fileID && item.tempFileURL) {
                     v.playUrl = item.tempFileURL
                   }
@@ -86,16 +109,26 @@ Page({
           }
         }
 
-        this.setData({ videos: videos, loading: false })
+        const videos = reset ? newVideos : this.data.videos.concat(newVideos)
+        const hasMore = res.hasMore !== false
+
+        this.setData({
+          videos: videos,
+          loading: false,
+          loadingMore: false,
+          hasMore: hasMore,
+          page: page + 1
+        })
       } else {
-        this.setData({ videos: [], loading: false })
+        this.setData({ loading: false, loadingMore: false })
       }
     } catch (err) {
       console.error('加载视频失败', err)
-      this.setData({ videos: [], loading: false })
+      this.setData({ loading: false, loadingMore: false })
     }
   },
 
+  // 之前的代码会被替换
   onTapUpload() {
     this.setData({
       showUploadModal: true,
@@ -188,7 +221,7 @@ Page({
 
       hideLoading()
       showToast('上传成功', 'success')
-      this.loadVideos()
+      this.loadVideos(true)
     } catch (err) {
       hideLoading()
       console.error('上传失败', err)
@@ -253,7 +286,7 @@ Page({
         })
         showToast(newFeatured ? '已置顶' : '已取消置顶', 'success')
         // 刷新列表
-        this.loadVideos()
+        this.loadVideos(true)
       } else {
         // 显示后端返回的具体错误（如"置顶数量已达上限"）
         showToast(res.message || '操作失败', 'none')
@@ -308,7 +341,7 @@ Page({
       hideLoading()
       if (res.success) {
         showToast('删除成功', 'success')
-        this.loadVideos()
+        this.loadVideos(true)
       } else {
         showToast(res.message || '删除失败', 'none')
       }

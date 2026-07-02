@@ -6,6 +6,10 @@ Page({
   data: {
     photos: [],
     loading: true,
+    loadingMore: false,
+    hasMore: true,
+    page: 1,
+    pageSize: 20,
     isAdmin: false,
     showUploadModal: false,
     uploadPassword: '',
@@ -24,35 +28,65 @@ Page({
   },
 
   onShow() {
-    this.loadPhotos()
+    this.loadPhotos(true)
     this.setData({ isAdmin: app.globalData.isAdmin })
   },
 
   onPullDownRefresh() {
-    this.loadPhotos().then(() => {
+    this.loadPhotos(true).then(() => {
       wx.stopPullDownRefresh()
     })
   },
 
-  async loadPhotos() {
-    this.setData({ loading: true })
+  // 触底加载更多
+  onReachBottom() {
+    if (this.data.hasMore && !this.data.loadingMore && !this.data.loading) {
+      this.loadPhotos(false)
+    }
+  },
+
+  // 加载照片：reset=true 重置，reset=false 加载更多
+  async loadPhotos(reset) {
+    if (reset) {
+      this.setData({ loading: true, photos: [], page: 1, hasMore: true })
+    } else {
+      if (!this.data.hasMore) return
+      this.setData({ loadingMore: true })
+    }
+
     try {
-      const res = await callCloud('getMediaList', { type: 'photo' })
+      const page = reset ? 1 : this.data.page
+      const res = await callCloud('getMediaList', {
+        type: 'photo',
+        page: page,
+        pageSize: this.data.pageSize,
+        loadMore: !reset  // true 表示加载更多
+      })
+
       if (res.success) {
-        // 格式化日期
-        const photos = (res.data || []).map(p => ({
+        const newPhotos = (res.data || []).map(p => ({
           ...p,
           featured: p.featured || false,
           createdAt: p.createdAt ? formatDateTime(p.createdAt) : '',
           uploaderName: p.uploaderName || '匿名同学'
         }))
-        this.setData({ photos, loading: false })
+
+        const photos = reset ? newPhotos : this.data.photos.concat(newPhotos)
+        const hasMore = res.hasMore !== false  // 后端没返回则视为还有
+
+        this.setData({
+          photos: photos,
+          loading: false,
+          loadingMore: false,
+          hasMore: hasMore,
+          page: page + 1
+        })
       } else {
-        this.setData({ photos: [], loading: false })
+        this.setData({ loading: false, loadingMore: false })
       }
     } catch (err) {
       console.error('加载照片失败', err)
-      this.setData({ photos: [], loading: false })
+      this.setData({ loading: false, loadingMore: false })
     }
   },
 
@@ -143,7 +177,7 @@ Page({
 
       hideLoading()
       showToast('上传成功', 'success')
-      this.loadPhotos()
+      this.loadPhotos(true)
     } catch (err) {
       hideLoading()
       console.error('上传失败', err)
@@ -194,7 +228,7 @@ Page({
         })
         showToast(newFeatured ? '已置顶' : '已取消置顶', 'success')
         // 刷新列表
-        this.loadPhotos()
+        this.loadPhotos(true)
       } else {
         // 显示后端返回的具体错误（如"置顶数量已达上限"）
         showToast(res.message || '操作失败', 'none')
@@ -255,7 +289,7 @@ Page({
       if (res.success) {
         showToast('删除成功', 'success')
         this.setData({ showPreview: false })
-        this.loadPhotos()
+        this.loadPhotos(true)
       } else {
         showToast(res.message || '删除失败', 'none')
       }
