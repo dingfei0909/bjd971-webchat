@@ -1,0 +1,9 @@
+{
+  "name": "updateClassInfo",
+  "version": "1.0.0",
+  "description": "更新班级介绍",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

@@ -1,0 +1,258 @@
+/* pages/about/about.wxss */
+
+.info-card {
+  margin: 30rpx;
+  background-color: #FFF;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  padding: 18rpx 0;
+}
+
+.info-label {
+  width: 160rpx;
+  font-size: 28rpx;
+  color: #999;
+}
+
+.info-value {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.info-value-sub {
+  flex: 1;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.divider {
+  height: 2rpx;
+  background-color: #F5F5F5;
+  margin: 16rpx 0;
+}
+
+.info-section {
+  padding: 16rpx 0;
+}
+
+.section-title {
+  font-size: 28rpx;
+  color: #2c5282;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.section-content {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.7;
+}
+
+.motto-box {
+  background-color: rgba(44, 82, 130, 0.08);
+  padding: 24rpx;
+  border-radius: 12rpx;
+  border-left: 6rpx solid #2c5282;
+}
+
+.motto-text {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 管理员操作 */
+.admin-bar {
+  margin: 0 30rpx 30rpx;
+}
+
+.admin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28rpx 0;
+  background-color: #FFF;
+  border: 2rpx dashed #2c5282;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  color: #2c5282;
+}
+
+.admin-btn:active {
+  background-color: #F0F4F8;
+}
+
+.admin-icon {
+  margin-right: 12rpx;
+  font-size: 32rpx;
+}
+
+.admin-logged {
+  background-color: #FFF;
+  border-radius: 20rpx;
+  padding: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.admin-info {
+  text-align: center;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #F5F5F5;
+}
+
+.admin-badge {
+  font-size: 28rpx;
+  color: #2c5282;
+  font-weight: 600;
+}
+
+.admin-edit-btn, .admin-logout-btn {
+  padding: 20rpx 0;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.admin-edit-btn {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+  color: #FFF;
+}
+
+.admin-logout-btn {
+  background-color: #F5F5F5;
+  color: #666;
+}
+
+.admin-edit-btn:active, .admin-logout-btn:active {
+  opacity: 0.8;
+}
+
+/* 弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal {
+  width: 600rpx;
+  background-color: #FFF;
+  border-radius: 20rpx;
+  padding: 50rpx 40rpx 40rpx;
+}
+
+.modal-large {
+  width: 90%;
+  max-height: 80vh;
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 16rpx;
+}
+
+.modal-hint {
+  font-size: 26rpx;
+  color: #999;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.modal-input {
+  border: 2rpx solid #EEE;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  font-size: 30rpx;
+  background-color: #FAFAFA;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 40rpx;
+}
+
+.btn-cancel, .btn-confirm {
+  flex: 1;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+  border-radius: 50rpx;
+  border: none;
+}
+
+.btn-cancel {
+  background-color: #F5F5F5;
+  color: #666;
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+  color: #FFF;
+}
+
+.btn-cancel::after, .btn-confirm::after {
+  border: none;
+}
+
+/* 编辑表单 */
+.edit-form {
+  width: 100%;
+  max-height: 700rpx;
+  overflow-y: auto;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+
+.form-item {
+  margin-bottom: 24rpx;
+}
+
+.form-label {
+  font-size: 26rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.form-input {
+  border: 2rpx solid #EEE;
+  border-radius: 8rpx;
+  padding: 16rpx 20rpx;
+  font-size: 28rpx;
+  background-color: #FAFAFA;
+}
+
+.form-textarea {
+  border: 2rpx solid #EEE;
+  border-radius: 8rpx;
+  padding: 16rpx 20rpx;
+  font-size: 28rpx;
+  background-color: #FAFAFA;
+  width: 100%;
+  height: 140rpx;
+  box-sizing: border-box;
+}

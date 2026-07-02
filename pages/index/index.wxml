@@ -1,0 +1,98 @@
+<view class="container">
+  <!-- 顶部 Hero 区域 -->
+  <view class="hero-container">
+    <view class="hero-gradient-overlay"></view>
+    <view class="hero-content">
+      <view class="hero-main">
+        <view class="hero-meta">1997 梦开始的地方</view>
+        <view class="hero-title">数本971</view>
+      </view>
+      <view class="hero-info">
+        <text class="info-school">江苏大学</text>
+        <text class="info-origin">原江苏理工大学</text>
+        <text class="info-location">虎踞北路50号</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 照片轮播 -->
+  <view class="carousel-section">
+    <view class="section-title">
+      <text class="title-text">📸 班级相册</text>
+      <text class="title-more" bindtap="onTapPhotos">查看全部 ›</text>
+    </view>
+    <swiper
+      class="carousel"
+      indicator-dots="{{true}}"
+      indicator-color="rgba(255, 140, 66, 0.3)"
+      indicator-active-color="#FF8C42"
+      autoplay="{{carouselPhotos.length > 1}}"
+      interval="3000"
+      duration="600"
+      circular="{{true}}"
+      bindtap="onTapCarousel"
+    >
+      <swiper-item wx:for="{{carouselPhotos}}" wx:key="_id" data-url="{{item.url}}">
+        <view class="carousel-item">
+          <image
+            class="carousel-img"
+            src="{{item.url}}"
+            mode="aspectFill"
+            lazy-load="{{true}}"
+          />
+          <view class="carousel-mask" wx:if="{{item.description}}">
+            <text class="carousel-desc">{{item.description}}</text>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <!-- 空状态 -->
+    <view class="carousel-empty" wx:if="{{carouselPhotos.length === 0 && !carouselLoading}}">
+      <view class="empty-icon">⭐</view>
+      <view class="empty-text">还没有置顶照片</view>
+      <view class="empty-hint">管理员可在照片墙点击照片设为置顶（最多6个）</view>
+    </view>
+
+    <!-- 加载中 -->
+    <view class="carousel-loading" wx:if="{{carouselLoading}}">
+      <text>加载中...</text>
+    </view>
+  </view>
+
+  <!-- 入口卡片 -->
+  <view class="entries">
+    <view class="entry-card" bindtap="onTapPhotos">
+      <view class="entry-icon">📷</view>
+      <view class="entry-info">
+        <view class="entry-title">照片墙</view>
+        <view class="entry-desc">记录美好瞬间</view>
+      </view>
+      <view class="entry-arrow">›</view>
+    </view>
+
+    <view class="entry-card" bindtap="onTapVideos">
+      <view class="entry-icon">🎬</view>
+      <view class="entry-info">
+        <view class="entry-title">视频墙</view>
+        <view class="entry-desc">珍藏校园时光</view>
+      </view>
+      <view class="entry-arrow">›</view>
+    </view>
+
+    <view class="entry-card" bindtap="onTapAbout">
+      <view class="entry-icon">📖</view>
+      <view class="entry-info">
+        <view class="entry-title">班级介绍</view>
+        <view class="entry-desc">了解我们的故事</view>
+      </view>
+      <view class="entry-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 寄语 -->
+  <view class="motto">
+    <view class="motto-text">{{classInfo.motto}}</view>
+    <view class="motto-from">—— {{classInfo.className}} 全体同学</view>
+  </view>
+</view>

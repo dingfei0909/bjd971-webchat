@@ -1,0 +1,117 @@
+<view class="container">
+  <!-- 班级信息卡片 -->
+  <view class="info-card">
+    <view class="info-row">
+      <view class="info-label">🏫 学校</view>
+      <view class="info-value">{{classInfo.school}}</view>
+    </view>
+    <view class="info-row">
+      <view class="info-label"></view>
+      <view class="info-value-sub">{{classInfo.schoolOld}}</view>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="info-row">
+      <view class="info-label">📍 地点</view>
+      <view class="info-value">{{classInfo.location}}</view>
+    </view>
+
+    <view class="info-row">
+      <view class="info-label">🎓 班级</view>
+      <view class="info-value">{{classInfo.className}}（{{classInfo.classType}}）</view>
+    </view>
+
+    <view class="info-row">
+      <view class="info-label">📅 入学</view>
+      <view class="info-value">{{classInfo.year}}年</view>
+    </view>
+
+    <view class="divider"></view>
+
+    <view class="info-section">
+      <view class="section-title">班级简介</view>
+      <view class="section-content">{{classInfo.description || '暂无介绍'}}</view>
+    </view>
+
+    <view class="info-section">
+      <view class="section-title">寄语</view>
+      <view class="motto-box">
+        <text class="motto-text">{{classInfo.motto}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 管理员登录/编辑 -->
+  <view class="admin-bar">
+    <view class="admin-btn" bindtap="onAdminAction" wx:if="{{!isAdmin}}">
+      <text class="admin-icon">🔐</text>
+      <text class="admin-text">管理员登录</text>
+    </view>
+    <view class="admin-logged" wx:else>
+      <view class="admin-info">
+        <text class="admin-badge">✓ 已登录管理员</text>
+      </view>
+      <view class="admin-edit-btn" bindtap="onEdit">✏️ 编辑内容</view>
+      <view class="admin-logout-btn" bindtap="onLogout">退出登录</view>
+    </view>
+  </view>
+
+  <!-- 管理员密码弹窗 -->
+  <view class="modal-mask" wx:if="{{showLoginModal}}" bindtap="onCloseLoginModal">
+    <view class="modal" catchtap="noop">
+      <view class="modal-title">管理员登录</view>
+      <view class="modal-hint">请输入管理员密码</view>
+      <input class="modal-input" type="password" password maxlength="20" placeholder="请输入密码" value="{{adminPassword}}" bindinput="onInputAdminPassword" />
+      <view class="modal-buttons">
+        <button class="btn-cancel" bindtap="onCloseLoginModal">取消</button>
+        <button class="btn-confirm" bindtap="onConfirmLogin">确定</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 编辑弹窗 -->
+  <view class="modal-mask" wx:if="{{showEditModal}}">
+    <view class="modal modal-large">
+      <view class="modal-title">编辑班级介绍</view>
+      <view class="edit-form">
+        <view class="form-item">
+          <text class="form-label">学校</text>
+          <input class="form-input" value="{{editForm.school}}" bindinput="onEditInput" data-field="school" placeholder="请输入学校名称" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">学校（原）</text>
+          <input class="form-input" value="{{editForm.schoolOld}}" bindinput="onEditInput" data-field="schoolOld" placeholder="请输入原学校名称" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">地点</text>
+          <input class="form-input" value="{{editForm.location}}" bindinput="onEditInput" data-field="location" placeholder="请输入地点" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">班级</text>
+          <input class="form-input" value="{{editForm.className}}" bindinput="onEditInput" data-field="className" placeholder="请输入班级" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">类型</text>
+          <input class="form-input" value="{{editForm.classType}}" bindinput="onEditInput" data-field="classType" placeholder="请输入类型" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">入学年份</text>
+          <input class="form-input" value="{{editForm.year}}" bindinput="onEditInput" data-field="year" placeholder="请输入入学年份" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">班级简介</text>
+          <textarea class="form-textarea" value="{{editForm.description}}" bindinput="onEditInput" data-field="description" placeholder="请输入班级简介"></textarea>
+        </view>
+        <view class="form-item">
+          <text class="form-label">寄语</text>
+          <textarea class="form-textarea" value="{{editForm.motto}}" bindinput="onEditInput" data-field="motto" placeholder="请输入寄语"></textarea>
+        </view>
+      </view>
+      <view class="modal-buttons">
+        <button class="btn-cancel" bindtap="onCloseEditModal">取消</button>
+        <button class="btn-confirm" bindtap="onSaveEdit">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

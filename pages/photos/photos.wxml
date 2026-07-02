@@ -1,0 +1,83 @@
+<view class="container">
+  <!-- 头部统计 -->
+  <view class="header">
+    <text class="header-text">共 {{photos.length}} 张</text>
+  </view>
+
+  <!-- 上传按钮 -->
+  <view class="upload-bar" bindtap="onTapUpload">
+    <view class="upload-btn">
+      <text class="upload-icon">⊕</text>
+      <text class="upload-text">上传照片</text>
+    </view>
+  </view>
+
+  <!-- 照片列表 -->
+  <view class="photo-grid" wx:if="{{photos.length > 0}}">
+    <view class="photo-item {{item.featured ? 'featured' : ''}}" wx:for="{{photos}}" wx:key="_id" bindtap="onTapPhoto" data-id="{{item._id}}" data-index="{{index}}">
+      <image class="photo-img" src="{{item.url}}" mode="aspectFill" lazy-load></image>
+      <view class="photo-desc" wx:if="{{item.description}}">{{item.description}}</view>
+      <!-- 置顶标记（所有人可见） -->
+      <view class="featured-badge" wx:if="{{item.featured}}">📌 置顶</view>
+      <!-- 照片信息：上传者 + 时间 -->
+      <view class="photo-info">
+        <view class="photo-uploader">{{item.uploaderName || '匿名同学'}}</view>
+        <view class="photo-date" wx:if="{{item.createdAt}}">{{item.createdAt}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:elif="{{!loading}}">
+    <view class="empty-icon">📷</view>
+    <view class="empty-text">还没有照片</view>
+    <view class="empty-hint">点击上方按钮上传第一张照片</view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 上传密码弹窗 -->
+  <view class="modal-mask" wx:if="{{showUploadModal}}" catchtouchmove="onNoop">
+    <view class="modal" catchtap="onNoop" catchtouchmove="onNoop">
+      <view class="modal-title">上传照片</view>
+      <view class="modal-hint">请输入您的姓名和上传密码</view>
+      <input class="modal-input" maxlength="20" placeholder="您的姓名（用于显示上传者）" value="{{uploaderName}}" bindinput="onInputUploaderName" adjust-position="{{true}}" cursor-spacing="20" hold-keyboard="{{false}}" />
+      <input class="modal-input" type="password" password maxlength="20" placeholder="上传密码" value="{{uploadPassword}}" bindinput="onInputPassword" adjust-position="{{true}}" cursor-spacing="20" hold-keyboard="{{false}}" style="margin-top: 20rpx;" />
+      <view class="modal-buttons">
+        <button class="btn-cancel" bindtap="onCloseUploadModal">取消</button>
+        <button class="btn-confirm" bindtap="onConfirmUpload">确定</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 照片预览弹窗 -->
+  <view class="preview-mask" wx:if="{{showPreview}}" bindtap="onClosePreview">
+    <view class="preview-container" catchtap="">
+      <image class="preview-img" src="{{previewPhoto.url}}" mode="aspectFit" bindtap=""></image>
+      <view class="preview-desc" wx:if="{{previewPhoto.description}}">{{previewPhoto.description}}</view>
+      <view class="preview-date" wx:if="{{previewPhoto.createdAt}}">{{previewPhoto.createdAt}}</view>
+      <view class="preview-actions">
+        <view class="preview-action" bindtap="onDownload">
+          <text class="action-icon">⬇️</text>
+          <text class="action-text">保存</text>
+        </view>
+        <view class="preview-action" bindtap="onShare">
+          <text class="action-icon">🔗</text>
+          <text class="action-text">分享</text>
+        </view>
+        <view class="preview-action featured" wx:if="{{isAdmin}}" bindtap="onToggleFeatured">
+          <text class="action-icon">{{previewPhoto.featured ? '📌' : '📍'}}</text>
+          <text class="action-text">{{previewPhoto.featured ? '取消置顶' : '设为置顶'}}</text>
+        </view>
+        <view class="preview-action delete" wx:if="{{isAdmin}}" bindtap="onDelete">
+          <text class="action-icon">🗑️</text>
+          <text class="action-text">删除</text>
+        </view>
+      </view>
+      <view class="preview-close" bindtap="onClosePreview">×</view>
+    </view>
+  </view>
+</view>

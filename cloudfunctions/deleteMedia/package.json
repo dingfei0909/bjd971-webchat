@@ -1,0 +1,9 @@
+{
+  "name": "deleteMedia",
+  "version": "1.0.0",
+  "description": "删除媒体",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

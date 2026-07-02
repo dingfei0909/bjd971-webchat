@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/photos/photos",
+    "pages/videos/videos",
+    "pages/about/about"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1e3a5f",
+    "navigationBarTitleText": "我们的数本971",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F5F8FB"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#2c5282",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/photos/photos",
+        "text": "照片墙"
+      },
+      {
+        "pagePath": "pages/videos/videos",
+        "text": "视频墙"
+      },
+      {
+        "pagePath": "pages/about/about",
+        "text": "班级介绍"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}
