@@ -122,5 +122,26 @@ Page({
       console.error('保存失败', err)
       showToast('保存失败', 'none')
     }
+  },
+
+  // 跳转到工信部 ICP 备案查询页面
+  onTapIcp() {
+    // 服务备案号查询
+    wx.setClipboardData({
+      data: '苏ICP备2026044365号-1X',
+      success: () => {
+        showToast('备案号已复制', 'success')
+      }
+    })
+  },
+
+  onTapIcpMain() {
+    // 主备案号查询
+    wx.setClipboardData({
+      data: '苏ICP备2026044365号',
+      success: () => {
+        showToast('主备案号已复制', 'success')
+      }
+    })
   }
 })

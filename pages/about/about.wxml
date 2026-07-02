@@ -114,4 +114,25 @@
       </view>
     </view>
   </view>
+
+  <!-- 备案信息 -->
+  <view class="beian">
+    <view class="beian-row">
+      <text class="beian-label">主办单位：</text>
+      <text class="beian-value">丁飞</text>
+    </view>
+    <view class="beian-row">
+      <text class="beian-label">服务名称：</text>
+      <text class="beian-value">我们的数本971</text>
+    </view>
+    <view class="beian-row beian-link">
+      <text class="beian-label">备案号：</text>
+      <text class="beian-link-text" bindtap="onTapIcp">苏ICP备2026044365号-1X</text>
+    </view>
+    <view class="beian-row beian-link">
+      <text class="beian-label">主备案号：</text>
+      <text class="beian-link-text" bindtap="onTapIcpMain">苏ICP备2026044365号</text>
+    </view>
+    <view class="beian-tip">© 2026 我们的数本971</view>
+  </view>
 </view>

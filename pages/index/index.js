@@ -103,6 +103,21 @@ Page({
     wx.switchTab({ url: '/pages/photos/photos' })
   },
 
+  // 复制备案号
+  onTapIcp() {
+    wx.setClipboardData({
+      data: '苏ICP备2026044365号-1X',
+      success: () => showToast('备案号已复制', 'success')
+    })
+  },
+
+  onTapIcpMain() {
+    wx.setClipboardData({
+      data: '苏ICP备2026044365号',
+      success: () => showToast('主备案号已复制', 'success')
+    })
+  },
+
   onTapVideos() {
     wx.switchTab({ url: '/pages/videos/videos' })
   },
