@@ -118,10 +118,6 @@ Page({
     })
   },
 
-  onTapVideos() {
-    wx.switchTab({ url: '/pages/videos/videos' })
-  },
-
   onTapAbout() {
     wx.switchTab({ url: '/pages/about/about' })
   },

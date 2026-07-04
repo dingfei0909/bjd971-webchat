@@ -71,15 +71,6 @@
       <view class="entry-arrow">›</view>
     </view>
 
-    <view class="entry-card" bindtap="onTapVideos">
-      <view class="entry-icon">🎬</view>
-      <view class="entry-info">
-        <view class="entry-title">视频墙</view>
-        <view class="entry-desc">珍藏校园时光</view>
-      </view>
-      <view class="entry-arrow">›</view>
-    </view>
-
     <view class="entry-card" bindtap="onTapAbout">
       <view class="entry-icon">📖</view>
       <view class="entry-info">
@@ -94,6 +85,14 @@
   <view class="motto">
     <view class="motto-text">{{classInfo.motto}}</view>
     <view class="motto-from">—— {{classInfo.className}} 全体同学</view>
+  </view>
+
+  <!-- 上传入口提示（让用户知道密码，体验完整功能） -->
+  <view class="upload-hint">
+    <view class="hint-title">📤 上传你的照片</view>
+    <view class="hint-text">点击下方「照片墙」卡片进入</view>
+    <view class="hint-text">点击「上传照片」按钮，输入密码「<text class="hint-password">bjd971</text>」即可上传</view>
+    <view class="hint-text">管理员使用密码「<text class="hint-password">feiger</text>」</view>
   </view>
 
   <!-- 备案信息 -->

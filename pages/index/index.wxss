@@ -314,3 +314,39 @@
   color: #9CA3AF;
   text-align: center;
 }
+
+/* 上传入口提示 */
+.upload-hint {
+  margin: 40rpx 30rpx 0;
+  padding: 30rpx 24rpx;
+  background: linear-gradient(135deg, #FFF7E6 0%, #FFE7BA 100%);
+  border-radius: 16rpx;
+  border-left: 6rpx solid #FF8C42;
+  text-align: center;
+}
+
+.hint-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #D46A1F;
+  margin-bottom: 12rpx;
+}
+
+.hint-text {
+  font-size: 26rpx;
+  color: #8B6914;
+  line-height: 1.6;
+}
+
+.hint-password {
+  display: inline-block;
+  padding: 4rpx 14rpx;
+  margin: 0 4rpx;
+  background-color: #D46A1F;
+  color: #FFF;
+  border-radius: 8rpx;
+  font-weight: 700;
+  font-family: monospace;
+  font-size: 26rpx;
+  letter-spacing: 1rpx;
+}
